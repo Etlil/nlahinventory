@@ -5,7 +5,7 @@
       
       <div class="flex-1 space-y-8">
         <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05]">
-          Northern Luzon Adventist Hospital INC.
+          Northern Luzon Adventist Hospital INCo.
         </h1>
         <p class="text-xl md:text-3xl text-zinc-500 font-medium max-w-lg leading-snug">
           Artacho, Sison, Pangasinan
