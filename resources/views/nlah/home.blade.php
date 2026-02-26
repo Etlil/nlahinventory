@@ -27,6 +27,7 @@
             <div>
               <h3 class="font-bold text-lg">MISSION</h3>
               <p class="text-zinc-500 leading-relaxed">Sharing Jesus Christ Healing Ministry</p>
+              <p class="text-zinc-500 leading-relaxed">Good Heart</p>
             </div>
           </div>
 
