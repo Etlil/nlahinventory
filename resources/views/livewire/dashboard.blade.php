@@ -3,7 +3,7 @@
     <div class="max-w-7xl mx-auto">
         <div class="flex items-center justify-between mb-8">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Mission Medical Dashboardsss</h1>
+                <h1 class="text-2xl font-bold text-gray-900">Mission Medical Dashboard</h1>
                 <p class="text-sm text-gray-500">Tracking medicine availability for effective outreach.</p>
             </div>
             <div class="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
