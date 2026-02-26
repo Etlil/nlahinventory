@@ -6,9 +6,11 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        @include('partials.head') {{-- Ensure this includes your CSS/Tailwind --}}
 
         <title>NORTHERN LUZON ADVENTIST HOSPITAL INC.</title>
-
+<link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=inter:400,500,600&display=swap" rel="stylesheet" />
         <link rel="icon" href="/1.png" sizes="any">
         <link rel="icon" href="/1.png" type="image/svg+xml">
         <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -29,7 +31,7 @@
             document.documentElement.classList.remove('dark');
         }
     </script>
-
+ @fluxAppearance
     <style> [x-cloak] { display: none !important; } </style>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
@@ -41,138 +43,8 @@
         </style>
     </head>
     <body class="text-zinc-900 antialiased">
-
-  <header class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 ">
-    <nav class="flex items-center justify-between w-full max-w-4xl h-14 px-4 bg-white/70 backdrop-blur-xl border border-zinc-200/50 rounded-full shadow-sm">
-      
-      <div class="flex items-center gap-2 pl-2">
-        <div class="w-5 h-5 bg-black rounded-full flex items-center justify-center">
-          <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
-        </div>
-        <span class="font-bold tracking-tight text-sm md:text-base">NLAH</span>
-      </div>
-
-      <div class="hidden md:flex items-center gap-6 text-[13px] font-medium text-zinc-600">
-        
-        <a href="#" class="hover:text-black transition-colors">Home</a>
-        <a href="#" class="hover:text-black transition-colors">Services</a>
-        <div class="relative group">
-          <a href="#" class="flex items-center gap-1 hover:text-black transition-colors">
-            HR Corner 
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </a>
-          <div class="absolute left-0 mt-2 w-48 bg-white border border-zinc-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-            <a href="#" class="block px-4 py-2 text-sm text-zinc-600 hover:text-black hover:bg-zinc-50 first:rounded-t-lg">Leave Application</a>
-            <a href="#" class="block px-4 py-2 text-sm text-zinc-600 hover:text-black hover:bg-zinc-50">Pay-Off Application</a>
-            <a href="#" class="block px-4 py-2 text-sm text-zinc-600 hover:text-black hover:bg-zinc-50 last:rounded-b-lg">Overtime/On-call Application</a>
-          </div>
-        </div>
-
-        <a href="#" class="hover:text-black transition-colors">About Us</a>
-      </div>
-      <div class="flex items-center gap-2">
-        <div class="flex items-center gap-2 p-8">
-</div>
-
-        @if (Route::has('login'))
-                <nav class="flex items-center justify-end gap-4">
-                    
-                    @auth
-                        <a
-                            href="{{ url('/dashboard') }}"
-                            class="hidden md:block px-4 py-1.5 border border-zinc-200 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
-                        >
-                            Dashboard
-                        </a>
-                    @else
-                        <a
-                            href="{{ route('login') }}"
-                            class="hidden md:block px-4 py-1.5 border border-zinc-200 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors"
-                        >
-                            Log in
-                        </a>
-
-                        @if (Route::has('register'))
-                            <a
-                                href="{{ route('register') }}"
-                                class="hidden md:block px-4 py-1.5 border border-zinc-200 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors">
-                                Register
-                            </a>
-                        @endif
-                    @endauth
-                </nav>
-            @endif
-
-        <a href="https://www.facebook.com/nlahospitalinc" target="_blank" class="hover:text-black transition-colors"><button class="p-2 text-zinc-500 hover:text-black transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
-        <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
-        </svg>
-        </button></a>
-        
-
-        <button class="md:hidden p-1.5 text-zinc-500">
-           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-        </button>
-      </div>
-    </nav>
-  </header>
-
-  <main class="max-w-7xl mx-auto px-6 pt-32 md:pt-48 pb-20">
-    <div class="flex flex-col md:flex-row gap-12 md:gap-24 items-start">
-      
-      <div class="flex-1 space-y-8">
-        <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05]">
-          Northern Luzon Adventist Hospital INC.
-        </h1>
-        <p class="text-xl md:text-3xl text-zinc-500 font-medium max-w-lg leading-snug">
-          Artacho, Sison, Pangasinan
-        </p>
-        <div class="flex flex-wrap gap-3">
-          <button class="px-6 py-3 bg-[#e8dec9] text-zinc-800 rounded-lg font-medium hover:bg-[#dfd2b5] transition-colors">
-            Get template
-          </button> 
-        </div>
-      </div>
-
-      <div class="relative flex-1">
-        <div class="hidden md:block absolute -left-12 top-0 bottom-0 border-l border-dashed border-zinc-300"></div>
-        <div class="md:hidden w-full border-t border-dashed border-zinc-300 mb-12"></div>
-
-        <div class="space-y-10">
-          <div class="flex gap-4">
-            <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-zinc-800"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="1"/></svg></div>
-            <div>
-              <h3 class="font-bold text-lg">MISSION</h3>
-              <p class="text-zinc-500 leading-relaxed">Sharing Jesus Christ Healing Ministry</p>
-            </div>
-          </div>
-
-          <div class="flex gap-4">
-            <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-zinc-800"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
-            <div>
-              <h3 class="font-bold text-lg">VISSION</h3>
-              <p class="text-zinc-500 leading-relaxed">The Center of Excellence in Faith-based Healthcare, Education and Lifestyle.</p>
-            </div>
-          </div>
-
-          <div class="flex gap-4">
-            <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-zinc-800"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z"/><path d="M2 7h20"/><path d="M15 22V10"/><path d="M9 22V10"/></svg></div>
-            <div>
-              <h3 class="font-bold text-lg">Core Values</h3>
-              <p class="text-zinc-500 leading-relaxed">Integrity <br> Compassion <br> Excellence <br> Stewardship</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <section class="max-w-7xl mx-auto px-6 mb-20">
-    <div class="w-full h-[600px] bg-white rounded-3xl border border-zinc-200 shadow-sm flex items-center justify-center text-zinc-400 font-medium italic">
-      Your dashboard / UI preview goes here
-    </div>
-  </section>
-
-</body>
+    @livewireScripts
+    @fluxScripts
+        <livewire:navigation/>
+    </body>
 </html>

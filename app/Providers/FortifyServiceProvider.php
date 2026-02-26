@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
+use Illuminate\Support\Facades\Auth;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,23 @@ class FortifyServiceProvider extends ServiceProvider
         $this->configureActions();
         $this->configureViews();
         $this->configureRateLimiting();
+
+        $this->app->singleton(RegisterResponseContract::class, function () {
+        return new class implements RegisterResponseContract {
+            public function toResponse($request)
+            {
+                // Force logout any user the Fortify Controller just logged in
+                Auth::guard('web')->logout();
+
+                // Clear the session to be safe
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return redirect()->route('login')
+                    ->with('status', 'Registration successful! Please log in.');
+            }
+        };
+    });
     }
 
     /**

@@ -2,22 +2,49 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\About;
+use App\Livewire\Medicines;
+use App\Livewire\PatientManager;
+use App\Livewire\PatientDetail;
+use App\Livewire\Dashboard;
+use App\Livewire\Home;
+use App\Livewire\Services;
+use App\Livewire\Landing;
+// Route::get('/', function () {
+//     return view('welcome');
+// })->name('home');
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::get('/hpage', Landing::class)->name('hpage');
 
-Route::view('hr', 'HR')
+Route::get('/landing', Landing::class)->name('landing');
+Route::get('medicines', Medicines::class)
     ->middleware(['auth', 'verified'])
-    ->name('hr');    
+    ->name('medicines');  
+// Route::get('/',         Home::class)->name('home');
 
-Route::view('statements', 'statements')
+Route::prefix('nlah')->name('nlah.')->group(function () {
+
+    Route::view('/home', 'nlah.home')->name('home');
+    Route::view('/about', 'nlah.about')->name('about');
+    Route::view('/services', 'nlah.services')->name('services');
+
+});
+
+Route::view('reports', 'reports')
     ->middleware(['auth', 'verified'])
-    ->name('statements');    
+    ->name('reports');    
 
+Route::get('/dashboard', Dashboard::class)->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/patients',PatientManager::class)
+    ->middleware(['auth', 'verified'])
+    ->name('patients');
+Route::get('/dispense', \App\Livewire\DispenseMedicine::class)
+    ->middleware(['auth', 'verified'])
+    ->name('dispense');
+
+Route::get('/patients/{id}', PatientDetail::class)->name('patient.details');
 
 require __DIR__.'/settings.php';

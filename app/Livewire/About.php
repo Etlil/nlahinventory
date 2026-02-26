@@ -4,10 +4,11 @@ namespace App\Livewire;
 
 use Livewire\Component;
 
-class Navigation extends Component
+class About extends Component
 {
+ 
     public function render()
     {
-        return view('livewire.navigation');
+        return view('livewire.about');
     }
 }

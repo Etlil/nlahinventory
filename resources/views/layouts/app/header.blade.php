@@ -16,14 +16,20 @@
             </flux:navbar>
 
             <flux:navbar class="-mb-px max-lg:hidden">
-                <flux:navbar.item icon="layout-grid" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
-                    {{ __('HR Corner') }}
+                <flux:navbar.item icon="layout-grid" :href="route('medicines')" :current="request()->routeIs('medicines')" wire:navigate>
+                    {{ __('Medicines') }}
                 </flux:navbar.item>
             </flux:navbar>
 
             <flux:navbar class="-mb-px max-lg:hidden">
-                <flux:navbar.item icon="layout-grid" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
-                    {{ __('Statements') }}
+                <flux:navbar.item icon="layout-grid" :href="route('dispense')" :current="request()->routeIs('dispense')" wire:navigate>
+                    {{ __('Dispense Medicine') }}
+                </flux:navbar.item>
+            </flux:navbar>
+            
+            <flux:navbar class="-mb-px max-lg:hidden">
+                <flux:navbar.item icon="layout-grid" :href="route('patients')" :current="request()->routeIs('patients')" wire:navigate>
+                    {{ __('Patients') }}
                 </flux:navbar.item>
             </flux:navbar>
 
