@@ -52,6 +52,5 @@
   <section class="max-w-7xl mx-auto px-6 mb-20">
     <div class="w-full h-[600px] bg-white rounded-3xl border border-zinc-200 shadow-sm flex items-center justify-center text-zinc-400 font-medium italic">
       Your dashboard / UI preview goes here
-      testing push 
     </div>
   </section>
