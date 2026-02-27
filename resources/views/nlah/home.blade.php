@@ -2,10 +2,9 @@
 <livewire:navigation/>
 <main class="max-w-7xl mx-auto px-6 pt-32 md:pt-48 pb-20">
     <div class="flex flex-col md:flex-row gap-12 md:gap-24 items-start">
-      
       <div class="flex-1 space-y-8">
         <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05]">
-          Northern Luzon Adventist Hospital INCo.
+          Northern Luzon Adventist Hospital INC.
         </h1>
         <p class="text-xl md:text-3xl text-zinc-500 font-medium max-w-lg leading-snug">
           Artacho, Sison, Pangasinan
