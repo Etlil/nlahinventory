@@ -57,3 +57,4 @@
       Your dashboard / UI preview goes here
     </div>
   </section>
+  <livewire:footer/>
