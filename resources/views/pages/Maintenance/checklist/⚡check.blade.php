@@ -9,6 +9,9 @@ new class extends Component {
     public array $selectedSlots = [];
     public bool $editMode = false;
     public array $areaParts = [];
+    public array $locations = [];
+    public string $selectedLocation = '';
+    public ?int $selectedLocationId = null;
     public string $periodType = 'daily';
     public array $days = [
         'mon' => 'Monday',
@@ -22,6 +25,10 @@ new class extends Component {
 
     public function mount(): void
     {
+        $this->periodType = in_array(request('period'), ['daily', 'weekly', 'monthly'], true)
+            ? request('period')
+            : 'daily';
+        $this->loadLocations();
         $this->loadAreaParts();
         $this->buildWeekDates();
         $this->loadExistingSlots();
@@ -29,6 +36,16 @@ new class extends Component {
 
     public function updatedPeriodType(): void
     {
+        $this->loadAreaParts();
+        $this->loadExistingSlots();
+    }
+
+    public function updatedSelectedLocation(string $value): void
+    {
+        $matched = collect($this->locations)
+            ->first(fn (array $location) => strcasecmp($location['name'], trim($value)) === 0);
+
+        $this->selectedLocationId = $matched['id'] ?? null;
         $this->loadAreaParts();
         $this->loadExistingSlots();
     }
@@ -65,17 +82,22 @@ new class extends Component {
     private function loadAreaParts(): void
     {
         try {
-            $parts = DB::table('location_area_parts as lap')
+            $query = DB::table('location_area_parts as lap')
                 ->join('area_parts as ap', 'ap.id', '=', 'lap.area_part_id')
                 ->join('locations as l', 'l.id', '=', 'lap.location_id')
                 ->where('lap.frequency', $this->periodType)
                 ->orderBy('l.name')
-                ->orderBy('ap.name')
-                ->get([
-                    'lap.id as location_area_part_id',
-                    'ap.name as area_part_name',
-                    'l.name as location_name',
-                ]);
+                ->orderBy('ap.name');
+
+            if ($this->selectedLocationId !== null) {
+                $query->where('lap.location_id', $this->selectedLocationId);
+            }
+
+            $parts = $query->get([
+                'lap.id as location_area_part_id',
+                'ap.name as area_part_name',
+                'l.name as location_name',
+            ]);
 
             $this->areaParts = $parts->map(fn ($part) => [
                 'id' => (int) $part->location_area_part_id,
@@ -85,6 +107,22 @@ new class extends Component {
             ])->all();
         } catch (\Throwable) {
             $this->areaParts = [];
+        }
+    }
+
+    private function loadLocations(): void
+    {
+        try {
+            $this->locations = DB::table('locations')
+                ->orderBy('name')
+                ->get(['id', 'name'])
+                ->map(fn ($location) => [
+                    'id' => (int) $location->id,
+                    'name' => $location->name,
+                ])
+                ->all();
+        } catch (\Throwable) {
+            $this->locations = [];
         }
     }
 
@@ -187,36 +225,42 @@ new class extends Component {
 <section class="w-full">
     @include('partials.checklist-heading')
 
-    <x-pages::checklist.layout
+    <x-pages::Maintenance.checklist.layout
         :heading="__('Checklist Schedule')"
         :subheading="__('Set AM/PM cleaning checks per location part for the current week')"
         :wide="true"
     >
         <div class="space-y-4">
-            <div class="flex items-center justify-between">
-                <flux:text class="text-sm text-zinc-600 dark:text-zinc-300">
-                    {{ $editMode ? __('Edit mode: click cells to toggle checks.') : __('View mode: click Edit Checklist to modify.') }}
-                </flux:text>
-
+            <div class="flex items-start justify-between gap-4">
                 <div class="flex items-center gap-3">
-                    <div class="w-40">
-                        <label for="periodType" class="mb-1 block text-xs font-medium text-zinc-600 dark:text-zinc-300">
-                            {{ __('Period') }}
+                    <div class="w-64">
+                        <label for="selectedLocation" class="mb-1 block text-xs font-medium text-zinc-600 dark:text-zinc-300">
+                            {{ __('Area Location') }}
                         </label>
-                        <select
-                            id="periodType"
-                            wire:model.live="periodType"
+                        <input
+                            id="selectedLocation"
+                            type="text"
+                            list="location-options"
+                            wire:model.live.debounce.300ms="selectedLocation"
+                            placeholder="{{ __('Search location...') }}"
                             class="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
-                        >
-                            <option value="daily">{{ __('Daily') }}</option>
-                            <option value="weekly">{{ __('Weekly') }}</option>
-                            <option value="monthly">{{ __('Monthly') }}</option>
-                        </select>
+                        />
+                        <datalist id="location-options">
+                            @foreach ($locations as $location)
+                                <option value="{{ $location['name'] }}"></option>
+                            @endforeach
+                        </datalist>
                     </div>
+                </div>
 
+                <div class="flex flex-col items-end gap-1">
                     <flux:button variant="primary" wire:click="toggleEditMode">
                         {{ $editMode ? __('Save Checklist') : __('Edit Checklist') }}
                     </flux:button>
+
+                    <flux:text class="text-sm text-zinc-600 dark:text-zinc-300">
+                        {{ $editMode ? __('Edit mode: click cells to toggle checks.') : __('View mode: click Edit Checklist to modify.') }}
+                    </flux:text>
                 </div>
             </div>
 
@@ -271,5 +315,5 @@ new class extends Component {
                 </table>
             </div>
         </div>
-    </x-pages::checklist.layout>
+    </x-pages::Maintenance.checklist.layout>
 </section>

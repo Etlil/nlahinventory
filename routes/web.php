@@ -46,13 +46,13 @@ Route::get('/dispense', \App\Livewire\DispenseMedicine::class)
     ->name('dispense');
 
 Route::middleware(['auth'])->group(function () {
-    Route::redirect('/checklist', '/checklist/check')->name('checklist');
-    Route::redirect('/checklist/profile', '/checklist/check');
-    Route::livewire('/checklist/check', 'pages::checklist.check')->name('checklist.check');
+    Route::redirect('/Maintenance/checklist', '/Maintenance/checklist/check')->name('Maintenance.checklist');
+    Route::redirect('/Maintenance/checklist/profile', '/Maintenance/checklist/check');
+    Route::livewire('/Maintenance/checklist/check', 'pages::Maintenance.checklist.check')->name('Maintenance.checklist.check');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::livewire('/checklist/appearance', 'pages::checklist.appearance')->name('checklist.appearance');
+    Route::livewire('/Maintenance/checklist/appearance', 'pages::Maintenance.checklist.appearance')->name('Maintenance.checklist.appearance');
 });
 
 
