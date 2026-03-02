@@ -16,14 +16,14 @@ return new class extends Migration
             $table->integer('location_area_part_id');
             $table->date('cleaning_date');
             $table->enum('period_type', ['daily', 'weekly', 'monthly']);
-            $table->date('period_start');
             $table->enum('shift', ['AM', 'PM']);
             $table->enum('status', ['YES', 'NO']);
-            $table->string('inspector_name')->nullable();
+            $table->string('remarks')->nullable();
+            $table->string('proof')->nullable();
             $table->string('verifier_name')->nullable();
             $table->text('comments')->nullable();
 
-            $table->unique(['location_area_part_id', 'period_type', 'period_start', 'cleaning_date', 'shift']);
+            $table->unique(['location_area_part_id', 'period_type', 'cleaning_date', 'shift', 'remarks']);
         });
     }
 
